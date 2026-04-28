@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Module for simple pagination of a dataset using page and page_size parameters."""
+"""Module for simple pagination of a dataset."""
 import csv
 import math
 from typing import List, Tuple
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
-    """Return a tuple containing a start index and an end index corresponding
-    to the range of indexes to return in a list for the given pagination
-    parameters. Page numbers are 1-indexed, meaning the first page is page 1.
+    """Return a tuple of start and end indexes for pagination.
+
+    Page numbers are 1-indexed, meaning the first page is page 1.
     """
     start_index = (page - 1) * page_size
     end_index = page * page_size
@@ -25,7 +25,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Return the cached dataset, loading it from the CSV file if needed."""
+        """Return the cached dataset from the CSV file."""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
@@ -35,15 +35,15 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """Return the correct page of the dataset based on page and page_size.
+        """Return the correct page of the dataset.
 
         Args:
-            page: the page number to retrieve, must be a positive integer.
-            page_size: the number of items per page, must be a positive integer.
+            page: the page number, must be a positive integer.
+            page_size: the number of items per page, must be positive.
 
         Returns:
-            A list of rows corresponding to the requested page of the dataset.
-            Returns an empty list if the page is out of range.
+            A list of rows for the requested page, or empty list if
+            the page is out of range.
         """
         assert isinstance(page, int) and page > 0, \
             "page must be a positive integer"
