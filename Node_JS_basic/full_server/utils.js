@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export const readDatabase = (path) => new Promise((resolve, reject) => {
+const readDatabase = (path) => new Promise((resolve, reject) => {
   fs.readFile(path, 'utf8', (err, data) => {
     if (err) {
       reject(err);
@@ -19,3 +19,5 @@ export const readDatabase = (path) => new Promise((resolve, reject) => {
     resolve(studentsByField);
   });
 });
+
+export default readDatabase;
