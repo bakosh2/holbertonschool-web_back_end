@@ -2,11 +2,10 @@ import { readDatabase } from '../utils';
 
 export default class StudentsController {
   static getAllStudents(request, response) {
-    const databaseFile = process.argv[2];
+    const databaseFile = process.argv[process.argv.length - 1];
     readDatabase(databaseFile)
       .then((fields) => {
         const responseParts = ['This is the list of our students'];
-        // Sort fields alphabetically (case-insensitive)
         const sortedFields = Object.keys(fields).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
         for (const field of sortedFields) {
@@ -23,7 +22,7 @@ export default class StudentsController {
       return response.status(500).send('Major parameter must be CS or SWE');
     }
 
-    const databaseFile = process.argv[2];
+    const databaseFile = process.argv[process.argv.length - 1];
     return readDatabase(databaseFile)
       .then((fields) => {
         const list = fields[major] || [];
